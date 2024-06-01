@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -19,7 +20,8 @@ import lombok.Data;
 public class ProductCatagory {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "catagory_sequence", sequenceName = "catagory_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "catagory_sequence")
 	private Long id;
 	private String name;
 	private String description;
@@ -29,5 +31,5 @@ public class ProductCatagory {
 	private LocalDateTime deletedAt;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "catagory")
 	private List<Product> productList;
-	
+
 }

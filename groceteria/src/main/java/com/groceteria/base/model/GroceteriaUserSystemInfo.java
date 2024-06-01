@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -20,7 +21,8 @@ import lombok.Data;
 public class GroceteriaUserSystemInfo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "system_info_sequence", sequenceName = "system_info_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_info_sequence")
     private Long id;
     @ElementCollection
     @CollectionTable

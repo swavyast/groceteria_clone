@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -21,7 +22,8 @@ import lombok.Data;
 public class Product {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "product_sequence", sequenceName = "product_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_sequence")
 	private Long id;
 	private String name;
 	private String description;

@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Collections;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,10 +19,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.groceteria.base.enums.UserRole;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table
+@NoArgsConstructor
 public class GroceteriaAdmin implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -32,11 +36,25 @@ public class GroceteriaAdmin implements UserDetails {
 	private String name;
 	private String username;
 	private String password;
+	@Enumerated(EnumType.STRING)
 	private UserRole role;
 	private Boolean isAccountExpired;
 	private Boolean isAccountLocked;
 	private Boolean isEnabled;
 	private Boolean isCredentialExpired;
+
+	public GroceteriaAdmin(String name, String username, String password, UserRole role, Boolean isAccountExpired,
+			Boolean isAccountLocked, Boolean isEnabled, Boolean isCredentialExpired) {
+		super();
+		this.name = name;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.isAccountExpired = isAccountExpired;
+		this.isAccountLocked = isAccountLocked;
+		this.isEnabled = isEnabled;
+		this.isCredentialExpired = isCredentialExpired;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

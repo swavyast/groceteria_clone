@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -29,74 +30,75 @@ import lombok.Data;
 @Table
 public class GroceteriaUser implements UserDetails {
 
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(name = "fname")
-    private String firstName;
-    @Column(name = "mname")
-    private String middleName;
-    @Column(name = "lname")
-    private String lastName;
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-    @ElementCollection
-    private List<String> contacts;
-    @OneToMany(mappedBy = "user")
-    private List<GroceteriaUserAddress> addresses;
-    private String email;
-    private String password;
-    private String avatar;
-    private Boolean enabled;
-    private Boolean locked;
-    @Enumerated(EnumType.STRING)
-    private UserRole role;
+	@SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
+	private Long id;
+	@Column(name = "fname")
+	private String firstName;
+	@Column(name = "mname")
+	private String middleName;
+	@Column(name = "lname")
+	private String lastName;
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
+	@ElementCollection
+	private List<String> contacts;
+	@OneToMany(mappedBy = "user")
+	private List<GroceteriaUserAddress> addresses;
+	private String email;
+	private String password;
+	private String avatar;
+	private Boolean enabled;
+	private Boolean locked;
+	@Enumerated(EnumType.STRING)
+	private UserRole role;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
 
-        return Collections.singletonList(authority);
-    }
+		return Collections.singletonList(authority);
+	}
 
-    @Override
-    public String getPassword() {
+	@Override
+	public String getPassword() {
 
-        return password;
-    }
+		return password;
+	}
 
-    @Override
-    public String getUsername() {
+	@Override
+	public String getUsername() {
 
-        return email;
-    }
+		return email;
+	}
 
-    @Override
-    public boolean isAccountNonExpired() {
+	@Override
+	public boolean isAccountNonExpired() {
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public boolean isAccountNonLocked() {
+	@Override
+	public boolean isAccountNonLocked() {
 
-        return !locked;
-    }
+		return !locked;
+	}
 
-    @Override
-    public boolean isCredentialsNonExpired() {
+	@Override
+	public boolean isCredentialsNonExpired() {
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public boolean isEnabled() {
+	@Override
+	public boolean isEnabled() {
 
-        return enabled;
-    }
+		return enabled;
+	}
 
 }
